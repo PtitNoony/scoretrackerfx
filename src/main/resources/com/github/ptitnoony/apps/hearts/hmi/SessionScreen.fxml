@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.CheckListView?>
+<?import org.controlsfx.control.RangeSlider?>
+
+<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.ptitnoony.apps.hearts.hmi.SessionScreenController">
+   <children>
+      <TabPane layoutX="21.0" layoutY="26.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Summary">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.7639593908629442" layoutX="8.0" layoutY="8.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+                           <items>
+                              <LineChart fx:id="ratioChart" animated="false" title="Ratios">
+                                <xAxis>
+                                  <NumberAxis fx:id="ratioChartXAxis" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis fx:id="ratioChartYAxis" side="LEFT" />
+                                </yAxis>
+                              </LineChart>
+                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="8.0">
+                                 <children>
+                                    <Label text="Players List">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <CheckListView fx:id="playerCheckList" />
+                                    <HBox spacing="8.0">
+                                       <children>
+                                          <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Select All" HBox.hgrow="ALWAYS" />
+                                          <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Clear Selection" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                       </padding>
+                                    </HBox>
+                                    <Separator prefWidth="200.0" />
+                                    <Label text="Games" />
+                                    <RangeSlider fx:id="gamesRangeSlider" highValueChanging="true" lowValueChanging="true" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                                    <Label text="Ratio" />
+                                    <RangeSlider fx:id="ratioRangeSlider" highValueChanging="true" lowValueChanging="true" majorTickUnit="0.5" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                 </padding>
+                              </VBox>
+                           </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Untitled Tab 2">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
