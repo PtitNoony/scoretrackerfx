@@ -203,7 +203,8 @@ public class PlayerScreenController implements Initializable {
         List<Game> games = stats.getGames();
         nbGamesLabel.setText(Integer.toString(stats.getNbGamesPlayed()));
         rankingLabel.setText("TODO");
-        nemesisLabel.setText("TODO");
+        nemesisLabel.setText(stats.getCareerNemesis().getNickName());
+        bestSupplierLabel.setText(stats.getCareerBestPointSupplier().getNickName());
         displayStatsForGames(games);
         displayCarrerRatioHistory();
     }
@@ -216,13 +217,15 @@ public class PlayerScreenController implements Initializable {
             nbGamesLabel.setText(Integer.toString(sessionGames.size()));
             rankingLabel.setText("TODO");
             nemesisLabel.setText("TODO");
+            bestSupplierLabel.setText("TODO");
             displayStatsForGames(sessionGames);
             displaySessionRatioHistory();
         } else {
-            ratioLabel.setText("TODO");
-            nbGamesLabel.setText("TODO");
-            rankingLabel.setText("TODO");
-            nemesisLabel.setText("TODO");
+            ratioLabel.setText("");
+            nbGamesLabel.setText("");
+            rankingLabel.setText("");
+            nemesisLabel.setText("");
+            bestSupplierLabel.setText("");
         }
     }
 

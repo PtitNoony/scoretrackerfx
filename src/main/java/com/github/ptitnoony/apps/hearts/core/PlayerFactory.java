@@ -45,6 +45,8 @@ public class PlayerFactory {
 
     private static int nextUniqueID = 1;
 
+    public static final Player NOBODY = createPlayer(0, "", "", "Mr. Nobody");
+
     private PlayerFactory() {
         // private utility constructor
     }
@@ -244,8 +246,14 @@ public class PlayerFactory {
         private final Map<Session, List<Pair<Integer, Double>>> scoresBySessions;
         private final Map<Session, Double> ratioBySession;
         //
+        private Player nemesis = NOBODY;
+        private Player bestPointSupplier = NOBODY;
+        private Map<Session, Player> sessionNemesis;
+        private Map<Session, Player> sessionBestPointSupplier;
+        //
         private List<Pair<Integer, Double>> ratioHistory;
         private Map<Session, List<Pair<Integer, Double>>> ratioHistoryBySession;
+        private Map<Player, Double> otherPlayersScores;
         //
         private final PropertyChangeSupport propertyChangeSupport;
         //
@@ -263,6 +271,10 @@ public class PlayerFactory {
             //
             ratioHistory = new LinkedList<>();
             ratioHistoryBySession = new HashMap<>();
+            //
+            otherPlayersScores = new HashMap<>();
+            sessionNemesis = new HashMap<>();
+            sessionBestPointSupplier = new HashMap<>();
             //
             propertyChangeSupport = new PropertyChangeSupport(PlayerStatsImpl.this);
             //
@@ -323,6 +335,18 @@ public class PlayerFactory {
             ratioHistoryBySession.get(session).add(currentRatio);
             //
             ratioHistory.add(new Pair<>(game.getUniqueID(), carrerRatio));
+            //
+            game.getPlayers().stream().filter(p -> player != p)
+                    .forEach(p -> {
+                        double pScore = 0;
+                        if (otherPlayersScores.containsKey(p)) {
+                            pScore = otherPlayersScores.get(p);
+                            otherPlayersScores.remove(p);
+                        }
+                        otherPlayersScores.put(p, pScore + game.getPlayerScore(p));
+                    });
+            //
+            findOtherPlayers();
         }
 
         @Override
@@ -388,8 +412,32 @@ public class PlayerFactory {
         }
 
         @Override
+        public Player getCareerBestPointSupplier() {
+            return bestPointSupplier;
+        }
+
+        @Override
+        public Player getCareerNemesis() {
+            return nemesis;
+        }
+
+        @Override
+        public Player getSessionBestPointSupplier(Session session) {
+            return sessionBestPointSupplier.get(session);
+        }
+
+        @Override
+        public Player getSessionNemesis(Session session) {
+            return sessionNemesis.get(session);
+        }
+
+        @Override
         public void recalculateStats() {
             games.sort((g1, g2) -> Integer.compare(g1.getUniqueID(), g2.getUniqueID()));
+            //
+            otherPlayersScores = new HashMap<>();
+            nemesis = NOBODY;
+            bestPointSupplier = NOBODY;
             //
             // recalculating ratio history
             ratioHistory = new LinkedList<>();
@@ -398,6 +446,17 @@ public class PlayerFactory {
                 Game g = games.get(i);
                 totalScore += g.getPlayerScore(player);
                 ratioHistory.add(new Pair<>(g.getUniqueID(), totalScore / (double) (1.0 + i)));
+                // todo factor code at some point
+                g.getPlayers().stream().filter(p -> player != p)
+                        .forEach(p -> {
+                            double score = 0;
+                            if (otherPlayersScores.containsKey(p)) {
+                                score = otherPlayersScores.get(p);
+                                otherPlayersScores.remove(p);
+                            }
+                            otherPlayersScores.put(p, score + g.getPlayerScore(p));
+                        });
+
             }
             //
             // recalculating ratio history by session
@@ -415,7 +474,25 @@ public class PlayerFactory {
             });
             //
             // TODO be sure there is no need to update ratioBySession
+            //
+            findOtherPlayers();
+        }
+
+        private void findOtherPlayers() {
+            Map.Entry<Player, Double> maxEntry = null;
+            Map.Entry<Player, Double> minEntry = null;
+            for (Map.Entry<Player, Double> entry : otherPlayersScores.entrySet()) {
+                if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
+                    maxEntry = entry;
+                }
+                if (minEntry == null || entry.getValue().compareTo(minEntry.getValue()) < 0) {
+                    minEntry = entry;
+                }
+            }
+            nemesis = maxEntry != null ? maxEntry.getKey() : NOBODY;
+            bestPointSupplier = minEntry != null ? minEntry.getKey() : NOBODY;
         }
 
     }
+
 }

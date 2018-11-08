@@ -60,4 +60,11 @@ public interface PlayerStats {
      */
     void recalculateStats();
 
+    Player getCareerNemesis();
+
+    Player getSessionNemesis(Session session);
+
+    Player getCareerBestPointSupplier();
+
+    Player getSessionBestPointSupplier(Session session);
 }
