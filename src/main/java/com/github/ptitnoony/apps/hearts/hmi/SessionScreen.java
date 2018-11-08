@@ -31,7 +31,7 @@ import com.github.ptitnoony.apps.hearts.core.Session;
  *
  * @author hamon
  */
-public class SessionScreen implements Screen {
+public final class SessionScreen implements Screen {
 
     public static final String SCREEN_NAME = "SessionScreen";
     public static final String FXML_NAME = "SessionScreen.fxml";

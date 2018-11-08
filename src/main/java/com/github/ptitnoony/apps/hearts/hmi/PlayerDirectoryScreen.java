@@ -33,7 +33,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author hamon
  */
-public class PlayerDirectoryScreen implements Screen {
+public final class PlayerDirectoryScreen implements Screen {
 
     public static final String GO_TO_PLAYER_SCREEN_EVENT = "goToPlayerScreen";
     public static final String SCREEN_NAME = "PlayerDirectory";

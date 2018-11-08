@@ -229,6 +229,11 @@ public class PlayerFactory {
             return pFirstName + " " + pLastName + " (" + pNickName + ")";
         }
 
+        @Override
+        public void recalculateStats() {
+            pStats.recalculateStats();
+        }
+
     }
 
     private static class PlayerStatsImpl implements PlayerStats {
@@ -239,8 +244,8 @@ public class PlayerFactory {
         private final Map<Session, List<Pair<Integer, Double>>> scoresBySessions;
         private final Map<Session, Double> ratioBySession;
         //
-        private final List<Pair<Integer, Double>> ratioHistory;
-        private final Map<Session, List<Pair<Integer, Double>>> ratioHistoryBySession;
+        private List<Pair<Integer, Double>> ratioHistory;
+        private Map<Session, List<Pair<Integer, Double>>> ratioHistoryBySession;
         //
         private final PropertyChangeSupport propertyChangeSupport;
         //
@@ -380,6 +385,36 @@ public class PlayerFactory {
         public double getSessionRatio(Session session) {
             //TODO: protect
             return ratioBySession.get(session);
+        }
+
+        @Override
+        public void recalculateStats() {
+            games.sort((g1, g2) -> Integer.compare(g1.getUniqueID(), g2.getUniqueID()));
+            //
+            // recalculating ratio history
+            ratioHistory = new LinkedList<>();
+            double totalScore = 0.0;
+            for (int i = 0; i < games.size(); i++) {
+                Game g = games.get(i);
+                totalScore += g.getPlayerScore(player);
+                ratioHistory.add(new Pair<>(g.getUniqueID(), totalScore / (double) (1.0 + i)));
+            }
+            //
+            // recalculating ratio history by session
+            ratioHistoryBySession = new HashMap<>();
+            gamesBySessions.forEach((session, listGames) -> {
+                listGames.sort((g1, g2) -> Integer.compare(g1.getUniqueID(), g2.getUniqueID()));
+                List<Pair<Integer, Double>> sessionRatios = new LinkedList<>();
+                double sessionScore = 0.0;
+                for (int i = 0; i < listGames.size(); i++) {
+                    Game g = listGames.get(i);
+                    sessionScore += g.getPlayerScore(player);
+                    sessionRatios.add(new Pair<>(g.getUniqueID(), sessionScore / (double) (1.0 + i)));
+                }
+                ratioHistoryBySession.put(session, sessionRatios);
+            });
+            //
+            // TODO be sure there is no need to update ratioBySession
         }
 
     }

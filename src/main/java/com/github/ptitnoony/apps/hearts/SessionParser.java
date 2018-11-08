@@ -44,10 +44,19 @@ public class SessionParser {
     // HACK
     private static Session lastParsedSession = null;
 
+    /**
+     * 
+     * @return a map of the session parsed, by name
+     */
     public static Map<String, Session> getSessions() {
         return SESSIONS;
     }
 
+    /**
+     * 
+     * @param file a file containing a session data
+     * @return the session parsed
+     */
     public static Session parseLog(File file) {
         Session session = SessionFactory.createSession(file.getName());
         // todo check extension
@@ -95,13 +104,18 @@ public class SessionParser {
             }
         }
 //        games.forEach((id,game)->session.addGames(game));
-        session.addGames(games.values().stream().filter(Game::isComplete).collect(Collectors.toSet()));
+//        session.addGames(games.values().stream().filter(Game::isComplete).collect(Collectors.toSet()));
+        session.addGames(games.values().stream().collect(Collectors.toSet()));
         SESSIONS.put(session.getName(), session);
         // HACK
         lastParsedSession = session;
         return session;
     }
 
+    /**
+     * 
+     * @return the last session parsed
+     */
     public static Session getLastParsedSession() {
         return lastParsedSession;
     }

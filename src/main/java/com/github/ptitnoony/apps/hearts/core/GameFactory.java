@@ -48,6 +48,12 @@ public class GameFactory {
         return GAMES.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toList());
     }
 
+    /**
+     *
+     * @param session the session which hosts the game to be created
+     * @param idInSession the game id in the session
+     * @return the created game
+     */
     public static Game createGame(Session session, int idInSession) {
         while (GAMES.containsKey(nextUniqueID)) {
             nextUniqueID++;
@@ -55,6 +61,24 @@ public class GameFactory {
         final Game game = new GameImpl(nextUniqueID, session, idInSession);
         GAMES.put(nextUniqueID, game);
         incrementUniqueID();
+        return game;
+    }
+
+    /**
+     * if the unique id already exists, return null
+     *
+     * @param session the session which hosts the game to be created
+     * @param uniqueID the existing unique
+     * @param idInSession the game id in the session
+     * @return the created game
+     */
+    public static Game createGame(Session session, int uniqueID, int idInSession) {
+        if (GAMES.containsKey(uniqueID)) {
+            System.err.println("Could not create Game :: " + session + "  id=" + uniqueID);
+            return null;
+        }
+        final Game game = new GameImpl(uniqueID, session, idInSession);
+        GAMES.put(uniqueID, game);
         return game;
     }
 

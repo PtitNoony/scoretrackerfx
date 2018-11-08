@@ -31,7 +31,7 @@ import com.github.ptitnoony.apps.hearts.core.Player;
  *
  * @author hamon
  */
-public class PlayerScreen implements Screen {
+public final class PlayerScreen implements Screen {
 
     public static final String SCREEN_NAME = "PlayerScreen";
 

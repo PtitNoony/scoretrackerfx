@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class UIUtils {
 
-    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#0.00");
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#0.000");
 
     public static String formatNumber(Number value) {
         return DECIMAL_FORMAT.format(value);

@@ -51,5 +51,12 @@ public interface Player {
     int getID();
 
     PlayerStats getPlayerStats();
+    
+    
+    /**
+     * Recalculates all stats, can be used to counter errors while adding games
+     * not chronologically
+     */
+    void recalculateStats();
 
 }

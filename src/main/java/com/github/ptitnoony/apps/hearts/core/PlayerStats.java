@@ -49,9 +49,15 @@ public interface PlayerStats {
     void addPropertyChangeListener(PropertyChangeListener listener);
 
     void removePropertyChangeListener(PropertyChangeListener listener);
-    
+
     List<Pair<Integer, Double>> getPlayerRatioHistory();
 
     List<Pair<Integer, Double>> getPlayerRatioHistory(Session aSession);
-    
+
+    /**
+     * Recalculates all stats, can be used to counter errors while adding games
+     * not chronologically
+     */
+    void recalculateStats();
+
 }

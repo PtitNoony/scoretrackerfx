@@ -18,7 +18,6 @@ package com.github.ptitnoony.apps.hearts;
 
 import com.github.ptitnoony.apps.hearts.core.League;
 import com.github.ptitnoony.apps.hearts.core.LeagueFactory;
-import static com.github.ptitnoony.apps.hearts.core.LeagueFactory.createLeague;
 import com.github.ptitnoony.apps.hearts.core.Player;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -30,34 +29,59 @@ import java.beans.PropertyChangeSupport;
  */
 public class AppState {
 
+    /**
+     * Name of the event when current league is changed
+     */
     public static final String LEAGUE_CHANGED = "leagueChanged";
+    /**
+     * Name of the event when the current player is changed
+     */
     public static final String PLAYER_CHANGED = AppState.class.getName() + "playerChanged";
 
     private static final AppState APP_STATE = new AppState();
     private static final PropertyChangeSupport PROPERTY_CHANGE_SUPPORT = new PropertyChangeSupport(APP_STATE);
 
-//    private static League currentLeague = createLeague();
     private static League currentLeague = null;
     private static Player currentPlayer = null;
 
+    /**
+     *
+     * @param listener the listener to add
+     */
     public static void addPropertyChangeListener(PropertyChangeListener listener) {
         PROPERTY_CHANGE_SUPPORT.addPropertyChangeListener(listener);
     }
 
+    /**
+     *
+     * @param league the league to be loaded, displayed in the application
+     */
     public static void setLeague(League league) {
         currentLeague = league;
         PROPERTY_CHANGE_SUPPORT.firePropertyChange(LEAGUE_CHANGED, null, currentLeague);
     }
 
+    /**
+     *
+     * @return the league currently loaded in the application
+     */
     public static League getCurrentLeague() {
         return currentLeague;
     }
 
+    /**
+     *
+     * @param player the player to be selected in the application
+     */
     public static void setCurrentPlayer(Player player) {
         currentPlayer = player;
         PROPERTY_CHANGE_SUPPORT.firePropertyChange(PLAYER_CHANGED, null, currentLeague);
     }
 
+    /**
+     *
+     * @return the player selected
+     */
     public static Player getCurrentPlayer() {
         return currentPlayer;
     }

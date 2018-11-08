@@ -98,9 +98,8 @@ public class SessionXmlUtils {
 
     private static Game parseGame(Element gameElement, Session session) {
         int id = Integer.parseInt(gameElement.getAttribute(ID));
-        //TODO do not ignore ?
         int idInSession = Integer.parseInt(gameElement.getAttribute(ID_IN_SESSION_TAG));
-        Game game = GameFactory.createGame(session, idInSession);
+        Game game = GameFactory.createGame(session, id, idInSession);
         // parse scores
         NodeList scoreElements = gameElement.getElementsByTagName(GAME_SCORE_TAG);
         for (int i = 0; i < scoreElements.getLength(); i++) {

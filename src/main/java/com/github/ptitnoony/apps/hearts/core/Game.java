@@ -24,18 +24,48 @@ import java.util.List;
  */
 public interface Game {
 
+    /**
+     *
+     * @param p the player to add to the game
+     * @param score the player's score
+     */
     void addPlayer(Player p, double score);
 
+    /**
+     *
+     * @return the session in which the game is played
+     */
     Session getSession();
 
+    /**
+     *
+     * @return the game id in its session
+     */
     int getIdInSession();
 
+    /**
+     *
+     * @return the game unique ID
+     */
     int getUniqueID();
 
+    /**
+     *
+     * @param player a player
+     * @return the player's score in this game
+     */
     double getPlayerScore(Player player);
 
+    /**
+     *
+     * @return if the game is considered complete
+     */
     boolean isComplete();
 
+    /**
+     *
+     * @return the list of players who player in this game
+     */
     List<Player> getPlayers();
 
 }

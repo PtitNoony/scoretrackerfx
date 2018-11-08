@@ -30,7 +30,7 @@ import javafx.scene.Parent;
  *
  * @author hamon
  */
-public class HomeScreen implements Screen {
+public final class HomeScreen implements Screen {
 
     public static final String SCREEN_NAME = "HomeScreen";
     public static final String FXML_NAME = "HomeScreen.fxml";
@@ -50,7 +50,7 @@ public class HomeScreen implements Screen {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_NAME));
             rootPane = loader.load();
             controller = loader.getController();
-            controller.addPropertyChangeListener(e->propertyChangeSupport.firePropertyChange(e));
+            controller.addPropertyChangeListener(e -> propertyChangeSupport.firePropertyChange(e));
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
@@ -63,7 +63,7 @@ public class HomeScreen implements Screen {
 
     @Override
     public Node getMenuItem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -78,7 +78,7 @@ public class HomeScreen implements Screen {
 
     @Override
     public void refresh() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
