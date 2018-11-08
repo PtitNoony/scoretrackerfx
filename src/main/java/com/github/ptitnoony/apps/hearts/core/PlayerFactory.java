@@ -317,7 +317,7 @@ public class PlayerFactory {
             final Pair<Integer, Double> currentRatio = new Pair<>(game.getIdInSession(), (score + totalPreviousGames) / (nbPreviousGames + 1));
             ratioHistoryBySession.get(session).add(currentRatio);
             //
-            ratioHistory.add(new Pair<>(game.getIdInSession(), carrerRatio));
+            ratioHistory.add(new Pair<>(game.getUniqueID(), carrerRatio));
         }
 
         @Override
