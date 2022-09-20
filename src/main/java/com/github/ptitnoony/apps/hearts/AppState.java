@@ -93,13 +93,13 @@ public class AppState {
 
     private static void handleLeagueFactoryEvents(PropertyChangeEvent event) {
         switch (event.getPropertyName()) {
-            case LeagueFactory.LEAGUE_CREATED:
+            case LeagueFactory.LEAGUE_CREATED -> {
                 League league = (League) event.getNewValue();
                 if (league != null) {
                     setLeague(league);
                 }
-                break;
-            default:
+            }
+            default ->
                 throw new UnsupportedOperationException(AppState.class.getName() + " ::Unsupported ppty change :: " + event.getPropertyName());
         }
     }

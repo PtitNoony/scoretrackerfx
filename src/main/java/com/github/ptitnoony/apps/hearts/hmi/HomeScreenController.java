@@ -18,11 +18,16 @@ package com.github.ptitnoony.apps.hearts.hmi;
 
 import com.github.ptitnoony.apps.hearts.AppState;
 import com.github.ptitnoony.apps.hearts.SessionParser;
+import com.github.ptitnoony.apps.hearts.core.League;
+import com.github.ptitnoony.apps.hearts.core.LeagueFactory;
+import com.github.ptitnoony.apps.hearts.core.Player;
 import com.github.ptitnoony.apps.hearts.core.PlayerFactory;
+import com.github.ptitnoony.apps.hearts.core.Session;
 import static com.github.ptitnoony.apps.hearts.hmi.ScreenEvents.GO_TO_PLAYER_DIRECTORY_EVENT;
 import static com.github.ptitnoony.apps.hearts.hmi.ScreenEvents.GO_TO_PLAYER_SCREEN;
 import static com.github.ptitnoony.apps.hearts.hmi.ScreenEvents.GO_TO_SESSION_SCREEN;
 import com.github.ptitnoony.apps.hearts.utils.UIUtils;
+import com.github.ptitnoony.apps.hearts.utils.XMLLoader;
 import com.github.ptitnoony.apps.hearts.utils.XMLSaver;
 import eu.hansolo.tilesfx.Tile;
 import eu.hansolo.tilesfx.TileBuilder;
@@ -37,26 +42,21 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import com.github.ptitnoony.apps.hearts.core.League;
-import com.github.ptitnoony.apps.hearts.core.LeagueFactory;
-import com.github.ptitnoony.apps.hearts.core.Player;
-import com.github.ptitnoony.apps.hearts.core.Session;
-import com.github.ptitnoony.apps.hearts.utils.XMLLoader;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
 
 /**
  *
@@ -70,7 +70,7 @@ public class HomeScreenController implements Initializable {
     private AnchorPane homeScreenPane;
     @FXML
     private AnchorPane leftPane;
-    
+
     @FXML
     private ComboBox<League> leagueComboBox;
 
@@ -259,7 +259,7 @@ public class HomeScreenController implements Initializable {
 
     private void handleLeagueChange(PropertyChangeEvent event) {
         switch (event.getPropertyName()) {
-            case AppState.LEAGUE_CHANGED:
+            case AppState.LEAGUE_CHANGED -> {
                 if (league != null) {
                     league.removePropertyChangeListener(this::handleLeagueUpdate);
                 }
@@ -270,7 +270,7 @@ public class HomeScreenController implements Initializable {
                     league.addPropertyChangeListener(this::handleLeagueUpdate);
                     leagueComboBox.getSelectionModel().select(league);
                 }
-                break;
+            }
         }
         // log event
         refreshHMI();
